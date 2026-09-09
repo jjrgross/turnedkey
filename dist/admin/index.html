@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Metro House Pros</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0f2557;
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --light: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+      --red: #ef4444;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--light); color: var(--text); min-height: 100vh; }
+    header { background: var(--navy); color: white; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
+    header .brand { font-size: 1.25rem; font-weight: 700; }
+    header .brand span { color: var(--green); }
+
+    /* LOGIN SCREEN */
+    .login-screen {
+      min-height: calc(100vh - 62px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      text-align: center;
+    }
+    .login-box .lock { font-size: 2.5rem; margin-bottom: 14px; }
+    .login-box h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
+    .login-box p { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; }
+    .login-box input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    .login-box input:focus { outline: none; border-color: var(--navy); }
+    .login-box button {
+      width: 100%;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .login-box button:hover { background: #1a3a7a; }
+    .login-error { color: var(--red); font-size: 0.85rem; margin-top: 10px; display: none; }
+
+    /* ADMIN SCREEN */
+    .admin-screen { display: none; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 32px 20px; }
+    h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+    .badge { font-size: 0.7rem; background: var(--navy); color: white; padding: 3px 10px; border-radius: 99px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* FORM */
+    .add-panel { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 40px; box-shadow: var(--card-shadow); }
+    .add-panel h2 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; font-size: 0.8rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid .full { grid-column: 1 / -1; }
+    label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px; }
+    input, select, textarea { width: 100%; border: 1px solid var(--border); border-radius: 7px; padding: 9px 12px; font-size: 0.92rem; color: var(--text); background: white; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--navy); }
+    textarea { resize: vertical; min-height: 80px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; cursor: pointer; border: none; transition: opacity 0.15s; }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-danger { background: var(--red); color: white; font-size: 0.78rem; padding: 5px 12px; }
+    .btn-share { background: var(--navy); color: white; font-size: 0.78rem; padding: 5px 12px; }
+    .form-actions { margin-top: 18px; }
+    .msg { padding: 10px 14px; border-radius: 7px; font-size: 0.87rem; margin-top: 14px; display: none; }
+    .msg.success { background: #dcfce7; color: #15803d; display: block; }
+    .msg.error   { background: #fee2e2; color: #b91c1c; display: block; }
+
+    /* DEALS TABLE */
+    .deals-section h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; font-size: 0.8rem; }
+    .deal-row { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--card-shadow); }
+    .deal-thumb { width: 64px; height: 64px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: linear-gradient(135deg, #1e3a8a 0%, #0f2557 100%); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-size: 1.4rem; overflow: hidden; }
+    .deal-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .deal-info { flex: 1; min-width: 0; }
+    .deal-info .address { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .deal-info .price { font-weight: 800; color: var(--navy); font-size: 1rem; }
+    .deal-info .meta { color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+    .deal-actions { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+    .deal-status { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; }
+    .status-available { background: #dcfce7; color: #15803d; }
+    .status-pending   { background: #fef3c7; color: #92400e; }
+    .status-sold      { background: #fee2e2; color: #991b1b; }
+    .empty { text-align: center; padding: 40px; color: var(--muted); background: white; border: 1px solid var(--border); border-radius: 10px; }
+    .btn-edit { background: #f1f5f9; color: var(--text); font-size: 0.78rem; padding: 5px 12px; border: 1px solid var(--border); }
+    .btn-edit:hover { background: #e2e8f0; opacity: 1; }
+    .tab-btn { background: none; border: none; color: rgba(255,255,255,0.7); font-size: 0.9rem; font-weight: 600; cursor: pointer; padding: 8px 16px; border-radius: 6px; transition: all 0.2s; }
+    .tab-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+    .tab-btn.active { background: rgba(255,255,255,0.15); color: white; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .status-new { background: #dbeafe; color: #1e40af; }
+    .status-contacted { background: #fef3c7; color: #92400e; }
+    .status-qualified { background: #dcfce7; color: #15803d; }
+    .status-closed { background: #e5e7eb; color: #374151; }
+
+    /* EDIT MODAL */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: white; border-radius: 14px; padding: 28px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .modal-header h2 { font-size: 1.1rem; font-weight: 700; }
+    .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1; padding: 0 4px; }
+    .modal-close:hover { color: var(--text); }
+
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .form-grid .full { grid-column: 1; } .deal-row { flex-wrap: wrap; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">Metro House <span>Pros</span></div>
+  <div style="display:flex;gap:20px;align-items:center;">
+    <button class="tab-btn active" onclick="switchTab('deals')" id="tabDeals">Deals</button>
+    <button class="tab-btn" onclick="switchTab('leads')" id="tabLeads">Leads</button>
+    <span style="color:rgba(255,255,255,0.5);font-size:0.8rem;">Admin Panel</span>
+  </div>
+</header>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="lock">🔒</div>
+    <h2>Admin Access</h2>
+    <p>Enter your password to manage deals.</p>
+    <input type="password" id="pwInput" placeholder="Password" />
+    <button onclick="tryLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect password.</div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Edit Deal</h2>
+      <button class="modal-close" onclick="closeEdit()">×</button>
+    </div>
+    <form id="editForm">
+      <input type="hidden" id="editId" />
+      <div class="form-grid">
+        <div class="full">
+          <label>Property Address *</label>
+          <input type="text" id="editAddress" required />
+        </div>
+        <div>
+          <label>Asking Price *</label>
+          <input type="text" id="editPrice" required />
+        </div>
+        <div>
+          <label>Status</label>
+          <select id="editStatus">
+            <option value="Available">Available</option>
+            <option value="Pending">Pending</option>
+            <option value="Sold">Sold</option>
+          </select>
+        </div>
+        <div>
+          <label>Beds</label>
+          <input type="text" id="editBeds" />
+        </div>
+        <div>
+          <label>Baths</label>
+          <input type="text" id="editBaths" />
+        </div>
+        <div>
+          <label>Sq Ft</label>
+          <input type="text" id="editSqft" />
+        </div>
+        <div class="full">
+          <label>Description / Property Notes</label>
+          <textarea id="editDescription"></textarea>
+        </div>
+      </div>
+      <div class="form-actions" style="display:flex;gap:10px;align-items:center">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-edit" onclick="closeEdit()">Cancel</button>
+      </div>
+      <div class="msg" id="editMsg"></div>
+    </form>
+  </div>
+</div>
+
+<!-- EDIT LEAD MODAL -->
+<div class="modal-overlay" id="editLeadModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Edit Lead</h2>
+      <button class="modal-close" onclick="closeLeadEdit()">×</button>
+    </div>
+    <form id="editLeadForm">
+      <input type="hidden" id="editLeadId" />
+      <div class="form-grid">
+        <div class="full">
+          <label>Name *</label>
+          <input type="text" id="editLeadName" required />
+        </div>
+        <div>
+          <label>Phone *</label>
+          <input type="text" id="editLeadPhone" required />
+        </div>
+        <div>
+          <label>Email *</label>
+          <input type="email" id="editLeadEmail" required />
+        </div>
+        <div class="full">
+          <label>Property Address</label>
+          <input type="text" id="editLeadAddress" />
+        </div>
+        <div>
+          <label>Timeline</label>
+          <input type="text" id="editLeadTimeline" placeholder="ASAP, 1-3 months, etc." />
+        </div>
+        <div>
+          <label>Status</label>
+          <select id="editLeadStatus">
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="qualified">Qualified</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        <div class="full">
+          <label>Property Condition</label>
+          <input type="text" id="editLeadPropertyCondition" placeholder="Good, Needs Repairs, etc." />
+        </div>
+        <div>
+          <label>Occupancy</label>
+          <input type="text" id="editLeadOccupancy" placeholder="Vacant, Owner Occupied, etc." />
+        </div>
+        <div>
+          <label>Listed with Agent?</label>
+          <input type="text" id="editLeadListedWithAgent" placeholder="Yes/No" />
+        </div>
+        <div class="full">
+          <label>Additional Notes</label>
+          <textarea id="editLeadAdditionalNotes"></textarea>
+        </div>
+      </div>
+      <div class="form-actions" style="display:flex;gap:10px;align-items:center">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="button" class="btn btn-edit" onclick="closeLeadEdit()">Cancel</button>
+      </div>
+      <div class="msg" id="editLeadMsg"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin-screen" id="adminScreen">
+  <div class="container">
+    <h1 id="pageTitle">Manage Deals <span class="badge">Admin</span></h1>
+
+    <div class="add-panel">
+      <h2>Add New Property</h2>
+      <form id="dealForm">
+        <div class="form-grid">
+          <div class="full">
+            <label>Property Address *</label>
+            <input type="text" id="address" placeholder="123 Main St, Kenosha, WI 53140" required />
+          </div>
+          <div>
+            <label>Asking Price *</label>
+            <input type="text" id="price" placeholder="$149,000" required />
+          </div>
+          <div>
+            <label>Status</label>
+            <select id="status">
+              <option value="Available">Available</option>
+              <option value="Pending">Pending</option>
+              <option value="Sold">Sold</option>
+            </select>
+          </div>
+          <div>
+            <label>Beds</label>
+            <input type="text" id="beds" placeholder="3" />
+          </div>
+          <div>
+            <label>Baths</label>
+            <input type="text" id="baths" placeholder="2" />
+          </div>
+          <div>
+            <label>Sq Ft</label>
+            <input type="text" id="sqft" placeholder="1,400" />
+          </div>
+          <div class="full">
+            <label>Description / Property Notes</label>
+            <textarea id="description" placeholder="Condition, updates, investment highlights..."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">+ Add Deal</button>
+        </div>
+        <div class="msg" id="formMsg"></div>
+      </form>
+    </div>
+
+    <!-- DEALS TAB -->
+    <div class="tab-content active" id="dealsTab">
+      <div class="deals-section">
+        <h2>Current Deals</h2>
+        <div id="dealsList"><div class="empty">Loading...</div></div>
+      </div>
+    </div>
+
+    <!-- LEADS TAB -->
+    <div class="tab-content" id="leadsTab">
+      <div class="deals-section">
+        <h2>Lead Submissions</h2>
+        <div id="leadsList"><div class="empty">Loading...</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const PASS = 'metro99';
+  let _currentTab = 'deals';
+
+  function switchTab(tab) {
+    _currentTab = tab;
+    document.getElementById('tabDeals').classList.toggle('active', tab === 'deals');
+    document.getElementById('tabLeads').classList.toggle('active', tab === 'leads');
+    document.getElementById('dealsTab').classList.toggle('active', tab === 'deals');
+    document.getElementById('leadsTab').classList.toggle('active', tab === 'leads');
+    document.getElementById('pageTitle').innerHTML = 
+      tab === 'deals' 
+        ? 'Manage Deals <span class="badge">Admin</span>' 
+        : 'Manage Leads <span class="badge">Admin</span>';
+    
+    if (tab === 'leads') {
+      loadLeads();
+    }
+  }
+
+  function tryLogin() {
+    const val = document.getElementById('pwInput').value;
+    if (val === PASS) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminScreen').style.display = 'block';
+      loadDeals();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').focus();
+    }
+  }
+
+  document.getElementById('pwInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') tryLogin();
+  });
+
+  function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function statusClass(s) {
+    if (s==='Available') return 'status-available';
+    if (s==='Pending')   return 'status-pending';
+    return 'status-sold';
+  }
+
+  function leadStatusClass(s) {
+    if (s==='new') return 'status-new';
+    if (s==='contacted') return 'status-contacted';
+    if (s==='qualified') return 'status-qualified';
+    return 'status-closed';
+  }
+
+  function copyDealLink(id) {
+    const url = location.origin + '/deal?id=' + id;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('share-'+id);
+      const orig = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = orig; }, 2000);
+    });
+  }
+
+  async function deleteDeal(id) {
+    if (!confirm('Delete this deal? This cannot be undone.')) return;
+    const res = await fetch('/api/deals?manage=metro99&id='+id, { method: 'DELETE' });
+    if (res.ok) {
+      document.getElementById('row-'+id)?.remove();
+      if (!document.querySelectorAll('[id^="row-"]').length) {
+        document.getElementById('dealsList').innerHTML = '<div class="empty">No deals yet. Add one above.</div>';
+      }
+    } else {
+      alert('Failed to delete. Please try again.');
+    }
+  }
+
+  async function deleteLead(id) {
+    if (!confirm('Delete this lead? This cannot be undone.')) return;
+    const res = await fetch('/api/leads?manage=metro99&id='+id, { method: 'DELETE' });
+    if (res.ok) {
+      document.getElementById('lead-row-'+id)?.remove();
+      if (!document.querySelectorAll('[id^="lead-row-"]').length) {
+        document.getElementById('leadsList').innerHTML = '<div class="empty">No leads yet.</div>';
+      }
+    } else {
+      alert('Failed to delete. Please try again.');
+    }
+  }
+
+  let _deals = [];
+  let _leads = [];
+
+  async function loadDeals() {
+    _deals = await fetch('/api/deals').then(r=>r.json());
+    const list = document.getElementById('dealsList');
+    if (!_deals.length) {
+      list.innerHTML = '<div class="empty">No deals yet. Add one above.</div>';
+      return;
+    }
+    list.innerHTML = _deals.map(d => `
+      <div class="deal-row" id="row-${d.id}">
+        <div class="deal-thumb">🏠</div>
+        <div class="deal-info">
+          <div class="address">${esc(d.address)}</div>
+          <div class="price">${esc(d.price)}</div>
+          <div class="meta">
+            <span class="deal-status ${statusClass(d.status)}">${esc(d.status)}</span>
+            ${d.beds ? ` · ${esc(d.beds)} bed` : ''}${d.baths ? ` / ${esc(d.baths)} bath` : ''}${d.sqft ? ` · ${esc(d.sqft)} sqft` : ''}
+          </div>
+        </div>
+        <div class="deal-actions">
+          <button class="btn btn-share" id="share-${d.id}" onclick="copyDealLink('${d.id}')">🔗 Share</button>
+          <button class="btn btn-edit" onclick="openEdit('${d.id}')">Edit</button>
+          <button class="btn btn-danger" onclick="deleteDeal('${d.id}')">Delete</button>
+        </div>
+      </div>`).join('');
+  }
+
+  async function loadLeads() {
+    const res = await fetch('/api/leads?manage=metro99');
+    if (!res.ok) {
+      document.getElementById('leadsList').innerHTML = '<div class="empty">Failed to load leads.</div>';
+      return;
+    }
+    _leads = await res.json();
+    const list = document.getElementById('leadsList');
+    if (!_leads.length) {
+      list.innerHTML = '<div class="empty">No leads yet.</div>';
+      return;
+    }
+    list.innerHTML = _leads.map(l => `
+      <div class="deal-row" id="lead-row-${l.id}">
+        <div class="deal-thumb">👤</div>
+        <div class="deal-info">
+          <div class="address">${esc(l.name)}</div>
+          <div class="price" style="font-size:0.85rem;font-weight:600;">${esc(l.phone)} · ${esc(l.email)}</div>
+          <div class="meta">
+            <span class="deal-status ${leadStatusClass(l.status)}">${esc(l.status)}</span>
+            ${l.address ? ` · ${esc(l.address)}` : ''}
+            ${l.timeline ? ` · Timeline: ${esc(l.timeline)}` : ''}
+          </div>
+          ${l.additionalNotes ? `<div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">${esc(l.additionalNotes).substring(0,100)}${l.additionalNotes.length>100?'...':''}</div>` : ''}
+        </div>
+        <div class="deal-actions">
+          <button class="btn btn-edit" onclick="openLeadEdit('${l.id}')">Edit</button>
+          <button class="btn btn-danger" onclick="deleteLead('${l.id}')">Delete</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function openEdit(id) {
+    const d = _deals.find(x => x.id === id);
+    if (!d) return;
+    document.getElementById('editId').value        = d.id;
+    document.getElementById('editAddress').value   = d.address || '';
+    document.getElementById('editPrice').value     = d.price || '';
+    document.getElementById('editStatus').value    = d.status || 'Available';
+    document.getElementById('editBeds').value      = d.beds || '';
+    document.getElementById('editBaths').value     = d.baths || '';
+    document.getElementById('editSqft').value      = d.sqft || '';
+    document.getElementById('editDescription').value = d.description || '';
+    document.getElementById('editMsg').className   = 'msg';
+    document.getElementById('editModal').classList.add('open');
+  }
+
+  function closeEdit() {
+    document.getElementById('editModal').classList.remove('open');
+  }
+
+  function openLeadEdit(id) {
+    const l = _leads.find(x => x.id === id);
+    if (!l) return;
+    document.getElementById('editLeadId').value = l.id;
+    document.getElementById('editLeadName').value = l.name || '';
+    document.getElementById('editLeadPhone').value = l.phone || '';
+    document.getElementById('editLeadEmail').value = l.email || '';
+    document.getElementById('editLeadAddress').value = l.address || '';
+    document.getElementById('editLeadTimeline').value = l.timeline || '';
+    document.getElementById('editLeadStatus').value = l.status || 'new';
+    document.getElementById('editLeadPropertyCondition').value = l.propertyCondition || '';
+    document.getElementById('editLeadOccupancy').value = l.occupancy || '';
+    document.getElementById('editLeadListedWithAgent').value = l.listedWithAgent || '';
+    document.getElementById('editLeadAdditionalNotes').value = l.additionalNotes || '';
+    document.getElementById('editLeadMsg').className = 'msg';
+    document.getElementById('editLeadModal').classList.add('open');
+  }
+
+  function closeLeadEdit() {
+    document.getElementById('editLeadModal').classList.remove('open');
+  }
+
+  document.getElementById('editModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('editModal')) closeEdit();
+  });
+
+  document.getElementById('editLeadModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('editLeadModal')) closeLeadEdit();
+  });
+
+  document.getElementById('editForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = document.getElementById('editMsg');
+    msg.className = 'msg';
+    const payload = {
+      id:          document.getElementById('editId').value,
+      address:     document.getElementById('editAddress').value.trim(),
+      price:       document.getElementById('editPrice').value.trim(),
+      beds:        document.getElementById('editBeds').value.trim(),
+      baths:       document.getElementById('editBaths').value.trim(),
+      sqft:        document.getElementById('editSqft').value.trim(),
+      status:      document.getElementById('editStatus').value,
+      description: document.getElementById('editDescription').value.trim(),
+    };
+    try {
+      const res = await fetch('/api/deals?manage=metro99', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        closeEdit();
+        loadDeals();
+      } else {
+        const err = await res.json();
+        msg.textContent = err.error || 'Failed to save.';
+        msg.className = 'msg error';
+      }
+    } catch {
+      msg.textContent = 'Network error. Please try again.';
+      msg.className = 'msg error';
+    }
+  });
+
+  document.getElementById('editLeadForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = document.getElementById('editLeadMsg');
+    msg.className = 'msg';
+    const payload = {
+      id: document.getElementById('editLeadId').value,
+      name: document.getElementById('editLeadName').value.trim(),
+      phone: document.getElementById('editLeadPhone').value.trim(),
+      email: document.getElementById('editLeadEmail').value.trim(),
+      address: document.getElementById('editLeadAddress').value.trim(),
+      timeline: document.getElementById('editLeadTimeline').value.trim(),
+      status: document.getElementById('editLeadStatus').value,
+      propertyCondition: document.getElementById('editLeadPropertyCondition').value.trim(),
+      occupancy: document.getElementById('editLeadOccupancy').value.trim(),
+      listedWithAgent: document.getElementById('editLeadListedWithAgent').value.trim(),
+      additionalNotes: document.getElementById('editLeadAdditionalNotes').value.trim(),
+    };
+    try {
+      const res = await fetch('/api/leads?manage=metro99', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        closeLeadEdit();
+        loadLeads();
+      } else {
+        const err = await res.json();
+        msg.textContent = err.error || 'Failed to save.';
+        msg.className = 'msg error';
+      }
+    } catch {
+      msg.textContent = 'Network error. Please try again.';
+      msg.className = 'msg error';
+    }
+  });
+
+  document.getElementById('dealForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = document.getElementById('formMsg');
+    msg.className = 'msg';
+
+    const payload = {
+      address:     document.getElementById('address').value.trim(),
+      price:       document.getElementById('price').value.trim(),
+      beds:        document.getElementById('beds').value.trim(),
+      baths:       document.getElementById('baths').value.trim(),
+      sqft:        document.getElementById('sqft').value.trim(),
+      status:      document.getElementById('status').value,
+      description: document.getElementById('description').value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/deals?manage=metro99', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        msg.textContent = 'Deal added! Use the 🔗 Share button to copy the link.';
+        msg.className = 'msg success';
+        e.target.reset();
+        loadDeals();
+        setTimeout(() => { msg.className = 'msg'; }, 5000);
+      } else {
+        const err = await res.json();
+        msg.textContent = err.error || 'Failed to add deal.';
+        msg.className = 'msg error';
+      }
+    } catch {
+      msg.textContent = 'Network error. Please try again.';
+      msg.className = 'msg error';
+    }
+  });
+</script>
+</body>
+</html>

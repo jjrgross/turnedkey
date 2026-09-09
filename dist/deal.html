@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Property Detail | Metro House Pros</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0f2557;
+      --green: #22c55e;
+      --light: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--light); color: var(--text); min-height: 100vh; }
+    header { background: var(--navy); color: white; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
+    header .brand { font-size: 1.25rem; font-weight: 700; }
+    header .brand span { color: var(--green); }
+    header a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; }
+    header a:hover { color: white; }
+    .container { max-width: 800px; margin: 0 auto; padding: 32px 20px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; font-size: 0.88rem; margin-bottom: 24px; }
+    .back-link:hover { color: var(--navy); }
+.deal-status { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 12px; border-radius: 99px; margin-bottom: 12px; }
+    .status-available { background: #dcfce7; color: #15803d; }
+    .status-pending   { background: #fef3c7; color: #92400e; }
+    .status-sold      { background: #fee2e2; color: #991b1b; }
+    h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; line-height: 1.2; }
+    .price { font-size: 2rem; font-weight: 900; color: var(--navy); margin-bottom: 20px; }
+    .specs { display: flex; flex-wrap: wrap; gap: 20px; padding: 16px 20px; background: white; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 24px; }
+    .spec { display: flex; flex-direction: column; gap: 3px; }
+    .spec-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
+    .spec-value { font-size: 1rem; font-weight: 700; }
+    .description-box { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 28px; }
+    .description-box h2 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); margin-bottom: 10px; }
+    .description-box p { line-height: 1.7; color: var(--text); white-space: pre-wrap; }
+    .cta-box { background: var(--navy); color: white; border-radius: 12px; padding: 28px; text-align: center; }
+    .cta-box h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+    .cta-box p { color: rgba(255,255,255,0.75); margin-bottom: 20px; font-size: 0.95rem; }
+    .cta-btn { display: inline-block; background: var(--green); color: white; text-decoration: none; padding: 13px 28px; border-radius: 8px; font-weight: 700; font-size: 1rem; }
+    .cta-btn:hover { background: #16a34a; }
+    .share-row { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+    .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 7px; background: white; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text); }
+    .share-btn:hover { background: var(--light); }
+    .copied { color: var(--green) !important; }
+    .loading, .error-state { text-align: center; padding: 80px 20px; color: var(--muted); }
+    @media (max-width: 600px) { h1 { font-size: 1.4rem; } .price { font-size: 1.6rem; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">Metro House <span>Pros</span></div>
+  <a href="/">metrohousepros.com</a>
+</header>
+<div class="container">
+  <a class="back-link" href="/deals">← Back to all deals</a>
+  <div id="content"><div class="loading">Loading property...</div></div>
+</div>
+<script>
+  function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function statusClass(s) {
+    if (s==='Available') return 'status-available';
+    if (s==='Pending')   return 'status-pending';
+    return 'status-sold';
+  }
+  function copyLink() {
+    navigator.clipboard.writeText(location.href).then(()=>{
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(()=>{ btn.textContent = '🔗 Copy Link'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+  async function load() {
+    const id = new URLSearchParams(location.search).get('id');
+    if (!id) { document.getElementById('content').innerHTML='<div class="error-state">No property ID provided.</div>'; return; }
+    try {
+      const res = await fetch('/api/deals?id='+encodeURIComponent(id));
+      if (!res.ok) throw new Error();
+      const d = await res.json();
+      document.title = d.address + ' | Metro House Pros';
+      document.getElementById('content').innerHTML = `
+        <div class="deal-status ${statusClass(d.status)}">${esc(d.status)}</div>
+        <h1>${esc(d.address)}</h1>
+        <div class="price">${esc(d.price)}</div>
+        <div class="share-row">
+          <button class="share-btn" id="copyBtn" onclick="copyLink()">🔗 Copy Link</button>
+        </div>
+        ${(d.beds||d.baths||d.sqft)?`
+        <div class="specs">
+          ${d.beds?`<div class="spec"><div class="spec-label">Beds</div><div class="spec-value">🛏 ${esc(d.beds)}</div></div>`:''}
+          ${d.baths?`<div class="spec"><div class="spec-label">Baths</div><div class="spec-value">🚿 ${esc(d.baths)}</div></div>`:''}
+          ${d.sqft?`<div class="spec"><div class="spec-label">Sq Ft</div><div class="spec-value">📐 ${esc(d.sqft)}</div></div>`:''}
+        </div>`:'' }
+        ${d.description?`
+        <div class="description-box">
+          <h2>About this property</h2>
+          <p>${esc(d.description)}</p>
+        </div>`:''}
+        <div class="cta-box">
+          <h2>Interested in this property?</h2>
+          <p>Contact Metro House Pros to learn more or make an offer.</p>
+          <a class="cta-btn" href="tel:2623319170">Call (262) 331-9170</a>
+        </div>`;
+    } catch {
+      document.getElementById('content').innerHTML='<div class="error-state">Property not found or unavailable.</div>';
+    }
+  }
+  load();
+</script>
+</body>
+</html>
