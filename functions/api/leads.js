@@ -1,7 +1,7 @@
 // TurnedKey Properties - Lead Form Handler
 // This will be renamed to leads.js when deploying TurnedKey site
 
-const ADMIN_KEY = 'turnedkey2026';
+const ADMIN_KEY = 'turned99';
 
 // Email configuration
 const EMAIL_CONFIG = {
