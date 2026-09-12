@@ -82,9 +82,21 @@
     .hero {
       background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
       color: white;
-      padding: 80px 20px 120px;
+      padding: 60px 20px 120px;
       position: relative;
       overflow: hidden;
+    }
+    
+    .hero-logo-section {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-logo {
+      height: 120px;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
     }
     
     .hero::before {
@@ -602,12 +614,8 @@
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-    }
-    
-    .header-logo img {
-      height: 56px;
     }
     
     .header-contact {
@@ -794,6 +802,10 @@
     
     /* Responsive */
     @media (max-width: 968px) {
+      .hero-logo {
+        height: 80px;
+      }
+      
       .header-contact {
         flex-direction: column;
         gap: 12px;
@@ -847,17 +859,13 @@
     }
     
     @media (max-width: 640px) {
-      .header-content {
-        flex-direction: column;
-        gap: 16px;
-      }
-      
-      .header-logo img {
-        height: 32px;
+      .hero-logo {
+        height: 64px;
       }
       
       .header-contact {
         width: 100%;
+        gap: 16px;
       }
       
       .header-cta {
@@ -871,9 +879,6 @@
   <!-- Header -->
   <header class="header">
     <div class="header-content">
-      <div class="header-logo">
-        <img src="/turnedkey-logo.png" alt="TurnedKey Properties">
-      </div>
       <div class="header-contact">
         <a href="tel:2624255984" class="header-phone">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
@@ -889,6 +894,9 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
+      <div class="hero-logo-section">
+        <img src="/turnedkey-logo.png" alt="TurnedKey Properties" class="hero-logo">
+      </div>
       <div class="hero-content">
         <div>
           <h1>Get Your Cash Offer in 24 Hours</h1>
