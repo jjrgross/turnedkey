@@ -427,12 +427,14 @@
       margin: 0 auto;
       background: white;
       border-radius: 16px;
-      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
     
     .comparison table {
       width: 100%;
+      min-width: 560px;
       border-collapse: collapse;
     }
     
@@ -612,6 +614,10 @@
       color: #94a3b8;
       text-decoration: none;
       transition: color 0.2s;
+      display: inline-block;
+      min-height: 24px;
+      line-height: 24px;
+      padding: 2px 0;
     }
     
     .footer-links a:hover {
@@ -831,7 +837,7 @@
         height: auto;
         width: 90vw;
         max-width: 800px;
-        min-height: 400px;
+        min-height: 0;
       }
       
       .hero-logo-section {
@@ -895,7 +901,20 @@
     
     @media (max-width: 640px) {
       .hero-logo {
-        height: 64px;
+        height: auto;
+        min-height: 0;
+        max-height: 120px;
+        width: auto;
+        max-width: 90vw;
+      }
+      
+      .hero-logo-section {
+        margin-bottom: 24px;
+      }
+      
+      .comparison th,
+      .comparison td {
+        padding: 12px;
       }
       
       .header-contact {
