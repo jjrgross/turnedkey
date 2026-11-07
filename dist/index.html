@@ -1,47 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Review Schema -->
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "TurnedKey Properties",
-  "url": "https://turnedkey.com/",
-  "telephone": "+1-262-217-7981",
-  "email": "hello@turnedkey.com",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Kenosha",
-    "addressRegion": "WI",
-    "addressCountry": "US"
-  },
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "Kenosha"
-    },
-    {
-      "@type": "City",
-      "name": "Racine"
-    }
-  ],
-  "review": {
-    "@type": "Review",
-    "author": {
-      "@type": "Person",
-      "name": "Michael Rodriguez"
-    },
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": "5",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "reviewBody": "TurnedKey made selling my house incredibly easy! Got a fair cash offer in 24 hours, closed in 10 days. No repairs, no hassle. Highly recommend!"
-  }
-}
-</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"How much will you pay for my house?","acceptedAnswer":{"@type":"Answer","text":"We provide fair market offers based on your home's condition, location, and recent comparable sales. Competitive and transparent — no hidden deductions or surprise fees at closing."}},
@@ -49,7 +8,7 @@
 {"@type":"Question","name":"How fast can you close?","acceptedAnswer":{"@type":"Answer","text":"We can close in as little as 7 days. We're also flexible — 30, 60, or even 90 days to match your timeline."}},
 {"@type":"Question","name":"Do I need to make repairs?","acceptedAnswer":{"@type":"Answer","text":"No. We buy houses in as-is condition, from minor cosmetic work to major structural repairs."}},
 {"@type":"Question","name":"What if I still owe on my mortgage?","acceptedAnswer":{"@type":"Answer","text":"Not a problem. We'll pay off your mortgage at closing and you'll receive the remaining equity."}},
-{"@type":"Question","name":"Is this a legitimate offer or a scam?","acceptedAnswer":{"@type":"Answer","text":"We're verified real estate buyers who have purchased 92 homes. We close through licensed title companies and attorneys."}},
+{"@type":"Question","name":"Is this a legitimate offer or a scam?","acceptedAnswer":{"@type":"Answer","text":"We close through licensed title companies and attorneys."}},
 {"@type":"Question","name":"Do you buy houses in Kenosha and Racine?","acceptedAnswer":{"@type":"Answer","text":"Yes — we buy houses throughout Kenosha and Racine, Wisconsin, including the surrounding communities. If your property is in Kenosha County or Racine County, we can make you a fair cash offer."}},
 {"@type":"Question","name":"What happens after I submit my information?","acceptedAnswer":{"@type":"Answer","text":"Within 24 hours, we'll contact you to discuss your property. If it's a good fit, we'll schedule a quick walk-through and present a no-obligation cash offer."}}
 ]}
@@ -107,24 +66,24 @@
     .hero {
       background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
       color: white;
-      padding: 60px 20px 120px;
+      padding: 48px 20px 80px;
       position: relative;
       overflow: hidden;
     }
     
     .hero-logo-section {
-      margin-bottom: 56px;
+      margin-bottom: 28px;
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
       position: relative;
       z-index: 1;
-      margin-top: -40px;
-      margin-left: -30px;
+      margin-top: 0;
+      margin-left: 0;
     }
     
     .hero-logo {
-      height: 440px;
+      height: 120px;
       max-width: 100%;
       object-fit: contain;
       filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15));
@@ -651,8 +610,62 @@
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    
+    .header-logo img {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
+    
+    .header-nav {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+    }
+    
+    .header-nav a {
+      color: #1e293b;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+    
+    .header-nav a:hover {
+      color: #1d4ed8;
+    }
+    
+    .nav-toggle {
+      display: none;
+    }
+    
+    .nav-toggle-label {
+      display: none;
+      cursor: pointer;
+      font-size: 1.6rem;
+      line-height: 1;
+      padding: 6px 10px;
+      color: #1e293b;
+    }
+    
+    /* Photo gallery */
+    .photo-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    
+    .photo-row img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
     }
     
     .header-contact {
@@ -840,22 +853,47 @@
     /* Responsive */
     @media (max-width: 968px) {
       .hero-logo {
-        height: auto;
-        width: 90vw;
-        max-width: 800px;
-        min-height: 0;
+        height: 100px;
+        width: auto;
+        max-width: 90vw;
       }
       
       .hero-logo-section {
         margin-top: 0;
         margin-left: 0;
         justify-content: center;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
+      }
+      
+      .nav-toggle-label {
+        display: block;
+        margin-left: auto;
+      }
+      
+      .header-nav {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 0;
+        order: 3;
+      }
+      
+      .header-nav a {
+        display: block;
+        padding: 10px 0;
+        width: 100%;
+        border-top: 1px solid #f1f5f9;
+      }
+      
+      .nav-toggle:checked ~ .header-nav {
+        display: flex;
       }
       
       .header-contact {
-        flex-direction: column;
-        gap: 12px;
+        flex-direction: row;
+        gap: 16px;
+        flex-wrap: wrap;
       }
       
       .header-phone {
@@ -886,6 +924,10 @@
         grid-template-columns: 1fr;
       }
       
+      .photo-row {
+        grid-template-columns: 1fr;
+      }
+      
       .situations {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -907,15 +949,13 @@
     
     @media (max-width: 640px) {
       .hero-logo {
-        height: auto;
-        min-height: 0;
-        max-height: 120px;
+        height: 96px;
         width: auto;
         max-width: 90vw;
       }
       
       .hero-logo-section {
-        margin-bottom: 24px;
+        margin-bottom: 16px;
       }
       
       .comparison th,
@@ -926,11 +966,6 @@
       .header-contact {
         width: 100%;
         gap: 16px;
-      }
-      
-      .header-cta {
-        width: 100%;
-        text-align: center;
       }
     }
   </style>
@@ -949,6 +984,18 @@
   <!-- Header -->
   <header class="header">
     <div class="header-content">
+      <a class="header-logo" href="/"><img src="/turnedkey-logo.png" alt="TurnedKey Properties"></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+      <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">&#9776;</label>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/how-it-works/">How It Works</a>
+        <a href="/cities/kenosha-wi/">Kenosha</a>
+        <a href="/cities/racine-wi/">Racine</a>
+        <a href="/reviews/">Reviews</a>
+        <a href="/faq/">FAQ</a>
+        <a href="/about/">About</a>
+      </nav>
       <div class="header-contact">
         <a href="sms:+12622177981" class="header-phone">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
@@ -995,7 +1042,7 @@
         </div>
         
         <div class="lead-form">
-          <h2>Get Your Cash Offer</h2>
+          <h2>Request Your Free Offer</h2>
           <p>Free, no-obligation offer in 24 hours</p>
           
           <form id="leadForm">
@@ -1072,20 +1119,36 @@
   <section class="stats-bar">
     <div class="stats">
       <div class="stat">
-        <div class="stat-number">92</div>
-        <div class="stat-label">Homes Purchased</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">$6M+</div>
-        <div class="stat-label">Total Paid Out</div>
-      </div>
-      <div class="stat">
         <div class="stat-number">24hrs</div>
-        <div class="stat-label">Avg. Offer Time</div>
+        <div class="stat-label">Cash Offer in 24 Hours</div>
       </div>
       <div class="stat">
-        <div class="stat-number">4.8★</div>
-        <div class="stat-label">Customer Rating</div>
+        <div class="stat-number">7 Days</div>
+        <div class="stat-label">Fastest Close</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">$0</div>
+        <div class="stat-label">Fees or Commissions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Free</div>
+        <div class="stat-label">Moving Help</div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Homes We Buy -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">We Buy Homes in Any Condition</h2>
+        <p class="section-subtitle">From move-in ready to major fixer-upper — we buy Kenosha and Racine homes as-is.</p>
+      </div>
+      
+      <div class="photo-row">
+        <img src="/photos/house-01.jpg" alt="Small white single-story ranch house with a front lawn and trees" loading="lazy">
+        <img src="/photos/house-02.jpg" alt="Older white two-story house with a front porch and an overgrown yard" loading="lazy">
+        <img src="/photos/house-03.jpg" alt="Small red wooden house with white trim" loading="lazy">
       </div>
     </div>
   </section>
@@ -1257,90 +1320,6 @@
     </div>
   </section>
   
-  <!-- Testimonials -->
-  <section class="section" style="background: #f8fafc;">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">What Our Customers Say</h2>
-        <p class="section-subtitle">Real stories from real homeowners.</p>
-      </div>
-      
-      <div class="testimonials">
-        <div class="testimonial">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-text">"TurnedKey made the entire process incredibly smooth. Got my offer in 20 hours and closed in 10 days. Exactly what I needed during a difficult time."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">SR</div>
-            <div class="testimonial-info">
-              <h3>Sarah Rodriguez</h3>
-              <p>Houston, TX</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-text">"I inherited a property that needed tons of work. TurnedKey bought it as-is and I didn't have to lift a finger. Fair price, fast closing. Highly recommend!"</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">MC</div>
-            <div class="testimonial-info">
-              <h3>Michael Chen</h3>
-              <p>Los Angeles, CA</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-text">"After months of trying to sell through an agent, TurnedKey stepped in and closed the deal in 2 weeks. No more showings, no more stress. Thank you!"</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">JW</div>
-            <div class="testimonial-info">
-              <h3>Jennifer Williams</h3>
-              <p>Phoenix, AZ</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-text">"Relocating for work with only 3 weeks notice. TurnedKey saved me! Got a fair offer quickly and closed before my move date. Total lifesavers."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">DM</div>
-            <div class="testimonial-info">
-              <h3>David Martinez</h3>
-              <p>Miami, FL</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-text">"My house needed a new roof and foundation work. Instead of sinking money into repairs, TurnedKey bought it as-is. Smart decision and great team to work with."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">LJ</div>
-            <div class="testimonial-info">
-              <h3>Linda Johnson</h3>
-              <p>Atlanta, GA</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="testimonial">
-          <div class="testimonial-rating">★★★★★</div>
-          <p class="testimonial-text">"Professional, transparent, and honest. They walked me through every step and there were zero surprises. Got my money exactly when promised. A++"</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">RT</div>
-            <div class="testimonial-info">
-              <h3>Robert Taylor</h3>
-              <p>Seattle, WA</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
   <!-- Situations Section -->
   <section class="section">
     <div class="container">
@@ -1474,7 +1453,7 @@
         
         <div class="faq">
           <h3>Is this a legitimate offer or a scam?</h3>
-          <p>We're verified real estate buyers who have purchased 92 homes. We close through licensed title companies and attorneys, ensuring everything is legal and transparent.</p>
+          <p>We close through licensed title companies and attorneys, ensuring everything is legal and transparent.</p>
         </div>
         
         <div class="faq">
@@ -1498,23 +1477,7 @@
         <p class="section-subtitle">We've helped homeowners in Kenosha and Racine sell their properties quickly and easily.</p>
       </div>
       
-      <div class="trust-indicators">
-        <div class="trust-item">
-          <div class="trust-number">15+</div>
-          <p>Years in Business</p>
-        </div>
-        <div class="trust-item">
-          <div class="trust-number">92</div>
-          <p>Homes Purchased</p>
-        </div>
-        <div class="trust-item">
-          <div class="trust-number">$6M+</div>
-          <p>Paid to Homeowners</p>
-        </div>
-      </div>
-      
       <div class="trust-badges">
-        <div class="badge-item">✓ Verified Real Estate Buyers</div>
         <div class="badge-item">✓ No Obligation Offers</div>
         <div class="badge-item">✓ Transparent Process</div>
         <div class="badge-item">✓ Fast Closings</div>
@@ -1575,7 +1538,7 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2026 TurnedKey Properties. All rights reserved. Verified Real Estate Buyers.</p>
+        <p>&copy; 2026 TurnedKey Properties. All rights reserved.</p>
       </div>
     </div>
   </footer>

@@ -3,6 +3,10 @@
 <title>How It Works | TurnedKey Properties</title>
 <meta name="description" content="Sell your house in 3 simple steps: request your cash offer, review it within 24 hours, and close on your timeline."/>
 <link rel="canonical" href="https://turnedkey.com/how-it-works/"/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="How It Works | TurnedKey Properties" />
+<meta name="twitter:description" content="Sell your house in 3 simple steps: request your cash offer, review it within 24 hours, and close on your timeline." />
+<meta name="twitter:image" content="https://turnedkey.com/turnedkey-og-image.jpg" />
 <link rel="icon" type="image/png" href="/turnedkey-logo.png"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -55,6 +59,18 @@ footer a:hover{color:#fff}
 .cta-band h2{margin-bottom:12px}
 .cta-band p{opacity:.92;margin-bottom:24px}
 @media(max-width:700px){.hero h1{font-size:1.7rem}.foot-grid{grid-template-columns:1fr 1fr}}
+
+.site-header{background:#fff;border-bottom:1px solid #e2e8f0;padding:8px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.site-header .container{display:flex;align-items:center;gap:24px}
+.site-logo img{height:40px;width:auto;display:block}
+.site-nav{display:flex;align-items:center;gap:20px;margin-left:auto;flex-wrap:wrap}
+.site-nav a{color:#1e293b;text-decoration:none;font-weight:600;font-size:.95rem;white-space:nowrap}
+.site-nav a:hover{color:#1d4ed8}
+.site-nav a.phone{color:#1d4ed8}
+.site-nav a.cta{background:linear-gradient(135deg,#1d4ed8,#6d28d9);color:#fff;padding:9px 18px;border-radius:8px}
+.nav-toggle{display:none}
+.nav-toggle-label{display:none;cursor:pointer;font-size:1.5rem;line-height:1;padding:8px 10px;margin-left:auto;color:#1e293b}
+@media(max-width:760px){.site-header .container{flex-wrap:wrap}.nav-toggle-label{display:block}.site-nav{display:none;flex-direction:column;align-items:flex-start;width:100%;gap:0;margin-left:0}.site-nav a{display:block;padding:10px 0;width:100%;border-top:1px solid #f1f5f9}.nav-toggle:checked~.site-nav{display:flex}}
 </style><script async src="https://www.googletagmanager.com/gtag/js?id=G-CW86F2YMTH"></script>
 <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-CW86F2YMTH');</script>
 <style>
@@ -65,9 +81,55 @@ footer a:hover{color:#fff}
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 .skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:12px 20px;background:#fff;color:#111827;z-index:1000;font-weight:700;border:3px solid #005fcc;border-radius:8px}
 </style>
-</head><body><a class="skip-link" href="#main-content">Skip to main content</a><main id="main-content" tabindex="-1">
+</head><body><a class="skip-link" href="#main-content">Skip to main content</a><header class="site-header"><div class="container">
+<a class="site-logo" href="/"><img src="/turnedkey-logo.png" alt="TurnedKey Properties"></a>
+<input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+<label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">&#9776;</label>
+<nav class="site-nav" aria-label="Main navigation">
+<a href="/">Home</a>
+<a href="/how-it-works/">How It Works</a>
+<a href="/cities/kenosha-wi/">Kenosha</a>
+<a href="/cities/racine-wi/">Racine</a>
+<a href="/reviews/">Reviews</a>
+<a href="/faq/">FAQ</a>
+<a href="/about/">About</a>
+<a class="phone" href="sms:+12622177981">(262) 217-7981</a>
+<a class="cta" href="#offer">Get Cash Offer</a>
+</nav></div></header><main id="main-content" tabindex="-1">
 <div class="hero"><div class="container"><div class="breadcrumb"><a href="/">Home</a> &raquo; How It Works</div>
-<h1>How It Works</h1><p class="sub">Sell your house in 3 simple steps: request your cash offer, review it within 24 hours, and close on your timeline.</p></div></div>
+<h1>How It Works</h1><p class="sub">Sell your house in 3 simple steps: request your cash offer, review it within 24 hours, and close on your timeline.</p><p style="margin-top:20px"><a class="btn" href="#offer">Get My Cash Offer</a> &nbsp; <a href="sms:+12622177981" style="color:#fff;font-weight:700">Text (262) 217-7981</a></p></div></div>
 <div class="section"><div class="container"><div class="grid3"><div class="card"><span class="step-num">1</span><h2>Request Your Offer</h2><p>Fill out our quick form with your property details — under 2 minutes, no obligation.</p></div><div class="card"><span class="step-num">2</span><h2>Review Your Offer</h2><p>Receive a competitive cash offer within 24 hours. Ask questions, take your time.</p></div><div class="card"><span class="step-num">3</span><h2>Close On Your Timeline</h2><p>Close in as little as 7 days or up to 60 days. We handle everything.</p></div></div></div></div>
-</main><footer><div class="container"><div class="foot-bottom"><p>&copy; 2026 TurnedKey Properties. <a href="/">Home</a> · <a href="/cities/">Cities</a></p></div></div></footer>
+<div class="section alt" id="offer"><div class="container">
+<div class="form-card">
+<h2>Get Your Cash Offer</h2>
+<p>Free, no-obligation offer in 24 hours. Takes less than 2 minutes.</p>
+<form id="leadForm">
+<label>Full Name<input type="text" name="name" required /></label>
+<label>Phone<input type="tel" name="phone" required /></label>
+<label>Email<input type="email" name="email" /></label>
+<label>Property Address<input type="text" name="address" placeholder="Street address, Kenosha or Racine, WI" required /></label>
+<label>Property Condition<select name="condition"><option>Needs major repairs</option><option>Needs some work</option><option>Good condition</option><option>Recently updated</option></select></label>
+<label>Timeline<select name="timeline"><option>ASAP</option><option>Within 30 days</option><option>Within 60 days</option><option>Just exploring</option></select></label>
+<label>Listed with an agent?<select name="listedWithAgent"><option>No</option><option>Yes</option></select></label>
+<button class="submit" type="submit">Get My Cash Offer</button>
+</form>
+<p style="margin-top:14px;font-size:.9rem">Prefer to text? Text <a href="sms:+12622177981">(262) 217-7981</a></p>
+</div></div></div>
+
+</main><footer><div class="container"><div class="foot-grid">
+<div><p style="color:#fff;font-weight:700;margin-bottom:10px">TurnedKey Properties</p><p>We buy homes in Kenosha and Racine in any condition. Fast, fair, and hassle-free.</p></div>
+<div><h3>Company</h3><ul><li><a href="/about/">About Us</a></li><li><a href="/how-it-works/">How It Works</a></li><li><a href="/reviews/">Reviews</a></li><li><a href="/faq/">FAQ</a></li></ul></div>
+<div><h3>Locations</h3><ul><li><a href="/cities/">All Cities</a></li><li><a href="/cities/kenosha-wi/">Kenosha, WI</a></li><li><a href="/cities/racine-wi/">Racine, WI</a></li></ul></div>
+<div><h3>Contact</h3><ul><li><a href="sms:+12622177981">(262) 217-7981</a></li><li><a href="mailto:hello@turnedkey.com">hello@turnedkey.com</a></li><li><a href="/privacy-policy/">Privacy Policy</a></li><li><a href="/terms/">Terms of Service</a></li></ul></div>
+</div><div class="foot-bottom"><p>&copy; 2026 TurnedKey Properties. All rights reserved.</p></div></div></footer>
+<script>
+document.getElementById('leadForm').addEventListener('submit', async function(e){
+e.preventDefault();
+const btn=this.querySelector('button[type="submit"]');const t=btn.textContent;btn.textContent='Submitting...';btn.disabled=true;
+const fd={name:this.name.value,phone:this.phone.value,email:this.email.value,address:this.address.value,condition:this.condition.value,timeline:this.timeline.value,listedWithAgent:this.listedWithAgent.value,source:'how-it-works',createdAt:new Date().toISOString()};
+try{const r=await fetch('/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(fd)});const j=await r.json();
+if(r.ok){alert("Thank you! We'll contact you within 24 hours about your property.");this.reset();}
+else{alert('Something went wrong. Please text us at (262) 217-7981.');}}catch(err){alert('Error submitting form. Please text us at (262) 217-7981.');}
+btn.textContent=t;btn.disabled=false;});
+</script>
 </body></html>
