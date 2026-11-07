@@ -26,11 +26,19 @@
   </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CW86F2YMTH"></script>
 <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-CW86F2YMTH');</script>
+<style>
+/* ADA (WCAG 2.1 AA, 2026-11-07): visible focus indicator on light and dark
+   backgrounds (white outline + blue halo), skip-link styles. */
+:focus-visible{outline:2px solid #fff;outline-offset:2px;box-shadow:0 0 0 5px #005fcc}
+#main-content:focus{outline:none;box-shadow:none}
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{position:fixed;left:16px;top:16px;width:auto;height:auto;padding:12px 20px;background:#fff;color:#111827;z-index:1000;font-weight:700;border:3px solid #005fcc;border-radius:8px}
+</style>
 </head>
-<body>
+<body><a class="skip-link" href="#main-content">Skip to main content</a>
   <header>
     <a href="/"><img src="/turnedkey-logo.svg" alt="TurnedKey Properties" /></a>
-  </header>
+  </header><main id="main-content" tabindex="-1">
 
   <main>
     <h1>Sitemap</h1>
@@ -82,7 +90,7 @@
     </section>
   </main>
 
-  <footer>
+  </main><footer>
     <p>&copy; <script>document.write(new Date().getFullYear())</script> TurnedKey Properties. All rights reserved. &nbsp;|&nbsp;
       <a href="/privacy-policy">Privacy Policy</a> &nbsp;|&nbsp;
       <a href="/terms">Terms of Service</a>
